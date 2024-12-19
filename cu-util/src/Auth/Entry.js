@@ -3,13 +3,14 @@ import Col from "react-bootstrap/esm/Col";
 import Button from "react-bootstrap/esm/Button";
 
 const Entry = ({client_id, redirect_uri}) => (
-    <Container fluid>
+    <Container fluid >
         <Col>
              <Button
                 variant="dark"
                 onClick={() => {
                 window.location.href = `https://app.clickup.com/api?client_id=${client_id}&redirect_uri=${redirect_uri}`;
-                }}>
+                }}
+                >
                 Connect
             </Button>
         </Col>

@@ -4,7 +4,7 @@ import axios from "axios";
 
 const Authentication = ({ successState, errorState }) => (
 
-  <Container fluid>
+  <Container fluid >
     {successState ? (
       <h1>Success</h1>
     ) : errorState ? (
