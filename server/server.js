@@ -5,6 +5,7 @@ const cors = require('cors');
 const app = express();
 const http = require('http'); 
 const OAuthRoutes = require("./routes/oauth.js");
+const WebhookRoutes = require("./routes/webhook.js");
 
 dotenv.config();
 
@@ -36,7 +37,8 @@ app.get('/', (req, res) => {
 });
 
 app.use("/clickup", OAuthRoutes);
- 
+app.use("/webhooks", WebhookRoutes)
+; 
 const server = http.createServer(app);
 
 server.listen(PORT, () => {
