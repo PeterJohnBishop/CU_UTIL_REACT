@@ -12,7 +12,7 @@ router.post('/webhook', async (req, res) => {
 
     try {
         console.log("Received wehbhook data:", req.body);
-        const secretValue = req.headers['x-secret'];
+        const secretValue = req.headers['X-Signature'];
 
         if (!secretValue) {
             return res.status(400).send('Missing x-secret header');
