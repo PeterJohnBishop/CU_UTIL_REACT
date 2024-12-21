@@ -13,6 +13,7 @@ const PORT = process.env.PORT;
 
 const allowedOrigins = [
     /^http:\/\/localhost(:\d+)?$/, //localhost:allports
+    "https://obscure-dawn-20990-34de273bc864.herokuapp.com/"
 ];
 
 const corsOptions = {
