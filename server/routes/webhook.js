@@ -23,6 +23,8 @@ router.post('/webhook', async (req, res) => {
 
         res.status(200).json({
             message: 'Payload Received and validated',
+            sentSignature: signature,
+            originSignature: secretValue,
             data: req.body
         });
     } catch {
