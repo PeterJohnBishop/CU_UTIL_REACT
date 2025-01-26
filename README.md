@@ -1,12 +1,12 @@
 # CU_UTIL_REACT
 
-# Ideas
+## A Node Express server with routes to demonstrate,
 
-Lost style program that deletes all of the tasks in your Workspace if a special number sequence isn't input.
+- OAuth 2.0 Authentication Flow
+- Webhook Signature Verfication
+- File Upload handling and ClickUp Attachment endpoint
 
-Note Taker app? Create a task for each task.
+## React app
 
-Automate a way to create tasks with any or all fields completed. Knowledge base?
-
-Endpoint to create a task when error occurs. 
-
+- Views to handle OAuth Authentication 
+- Container-Presentational design pattern

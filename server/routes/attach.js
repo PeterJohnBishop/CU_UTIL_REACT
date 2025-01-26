@@ -40,7 +40,7 @@ const upload = multer({
         {
           headers: {
             ...formData.getHeaders(), 
-            Authorization: process.env.CU_API_KEY,
+            Authorization: process.env.CU_API_KEY, // replace with your personal API key
           },
         }
       );
