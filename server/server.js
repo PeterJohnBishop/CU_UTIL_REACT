@@ -6,7 +6,7 @@ const app = express();
 const http = require('http'); 
 const OAuthRoutes = require("./routes/oauth.js");
 const WebhookRoutes = require("./routes/webhook.js");
-const WebHookRoutes = require("./routes/webhook.js");
+const AttachmentRoutes = require("./routes/attach.js")
 
 dotenv.config();
 
@@ -38,11 +38,13 @@ app.get('/', (req, res) => {
   res.send('Welcome to CU_UTIL Server!');
 });
 
-app.use("/clickup", OAuthRoutes);
+app.use("/auth", OAuthRoutes);
 app.use("/webhooks", WebhookRoutes)
+app.use("/attachment", AttachmentRoutes)
 ; 
 const server = http.createServer(app);
 
 server.listen(PORT, () => {
+  // console.log(`HTTP server listening on https://obscure-dawn-20990-34de273bc864.herokuapp.com/:${PORT}`);
   console.log(`HTTP server listening on http://localhost:${PORT}`);
 });

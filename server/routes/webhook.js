@@ -11,22 +11,20 @@ router.post('/webhook', async (req, res) => {
     const signature = hash.digest('hex');
 
     try {
-        console.log("Received wehbhook data:", req.body);
         const secretValue = req.headers['x-signature'];
-        console.log(secretValue);
         if (!secretValue) {
-            return res.status(400).send('Missing x-secret header');
+            return res.status(400).send('Missing x-signature header');
         }
-
-        console.log('received x-secret', secretValue);
-        console.log(`Compare: [${signature}] vs [${secretValue}]`);
-
-        res.status(200).json({
-            message: 'Payload Received and validated',
-            sentSignature: signature,
-            originSignature: secretValue,
-            data: req.body
-        });
+        if (secretValue === signature) {
+            res.status(200).json({
+                message: 'Payload Received and validated',
+                data: req.body
+            });
+        } else {
+            res.status(403).send({
+                message: "Unable to validate payload signature."
+            });
+        }
     } catch {
         res.status(500).json({
             message: 'Webhook error',
