@@ -32,7 +32,12 @@ const upload = multer({
       const fileName = req.file.originalname;
   
       const formData = new FormData();
-      formData.append('attachment', fs.createReadStream(filePath), fileName);
+      formData.append('attachment', fs.createReadStream(filePath), fileName); // this creates a new form-data object and appends the file to it
+      // FormData.getHeaders() returns the headers needed to send the form-data object as a request
+      // This includes the 'Content-Type' header which is set to 'multipart/form-data' and includes the boundary string
+      // The boundary string is used to separate the different parts of the form-data object
+      // for example the file and any other fields that are appended to the form-data object
+      // 'content-disposition': 'form-data; name="attachment"; filename="file.pdf"' is an example of a part of the form-data object
   
       const clickUpResponse = await axios.post(
         `https://api.clickup.com/api/v2/task/${taskId}/attachment`,
