@@ -39,6 +39,7 @@ const AuthenticationContainer = () => {
         accessCode: accessCode,
       })
       .then(function (response) {
+        response.
         console.log(response);
         const token = response.data.response.access_token;
         localStorage.setItem("token", `Bearer ${token}`); 
