@@ -1,0 +1,417 @@
+Comments
+
+Create Comment with Rich Formatting
+Endpoint: /api/v2/task/:task_id/comment
+Purpose: Post comment with Markdown to a Task.
+HTTP Method: POST
+Example Payload(s):
+{"comment":[ {
+            "text": "new comment via api",
+            "attributes": {}
+        },
+        {
+            "text": "\n",
+            "attributes": {}
+        },
+        {
+            "text": "with a quote included and attributes removed",
+            "attributes": {}
+        },
+        {
+            "text": "\n",
+            "attributes": {
+                "blockquote": {}
+            }
+        }],"attachment":[],"followers":[54098740]
+}
+
+
+Custom Fields
+Create Custom Field
+Endpoint: /api/v2/list/:list_id/field 
+HTTP Method: POST
+Purpose: This allows you to create a new custom field.  The payload is basically the same payload that is returned from Get Available Custom Fields, but it has a "locations" attribute where you can set multiple Lists that the field will be available.  
+Example Payload(s):
+//dropdown
+{
+            "name": "Cuma - 1/9",
+            "type": "drop_down",
+            "locations":{
+                "listIds":[
+                    "381173738",
+                    "381173794"
+                ]
+            },
+            "type_config": {
+                "default": 0,
+                "placeholder": "Sélectionnez Cuma",
+                "options": [
+                    {
+                        "name": "Supprimer ceci après avoir ajouté Cuma",
+                        "color": null,
+                    }
+                ]
+            },
+            "hide_from_guests": false,
+            "required": false
+}
+Modify Custom Fields (not enabled by default)
+Additional background and warnings: 
+Endpoint: /api/v2/field/:field_id 
+HTTP Method: PATCH
+Purpose: This allows you to create options for both dropdowns and label fields.  You can also modify the options using this endpoint (i.e. renaming an option, re-ordering options, etc.) 
+NOTE: This endpoint not enabled by default, so you need to request having the feature enabled for a given Workspace:
+Create a hierarchy task: https://dev-forms.clickup.com/333/f/ad-910765/YGK4NCL1ZJDW0DUFPK
+Post in #squad-hierarchy to get eyes on it. 
+
+Example Payload(s):
+// Must include all previous options or else the previous options will be deleted
+{
+    "type_config": {
+        "default": 0,
+        "placeholder": null,
+        "new_drop_down": true,
+        "options": [
+            {
+                "id": "35dabe1c-6fa5-4cec-be3a-c61814be7fa0",
+                "name": "Previous option",
+                "color": null,
+                "orderindex": 0
+            },
+            },{
+	            "name":"New Option"
+	        }
+        ]
+    }
+}
+Add Custom Field to List
+Purpose: This endpoint will add an existing Custom Field to another List. 
+HTTP Method: POST
+Endpoint: /api/v2/list/:list_id/field/:field_id 
+Bulk Set Custom Fields
+Endpoint: /api/v2/task/:task_id/field 
+HTTP Method: PUT
+Purpose: This allows you to set up to 25 custom fields at once.  It supports the same fields and formats as the documented Set Custom Field endpoint
+Example Payload(s):
+{
+  "fields": [
+    {
+      "id":"330ed7ca-c6fe-4939-bfd7-fc314b6792f2",
+      "value":"A text value"
+    },
+    {
+      "id":"f20db5f1-69dc-42c7-8f59-1f670bffd6a3",
+      "value":4
+    },
+    {
+      "id":"f20db5f1-69dc-42c7-8f59-1f670bffd6a3",
+      "value":[
+        "1aed8e56-0594-4e99-9a21-587b20fcce87",
+        "c59f7a77-98a9-425b-9be6-1b238d074b78"
+      ]
+    },
+    {
+      "id": "0905967e-6e99-4be6-832b-63f7b0391161",
+      "value": "1740497987000",
+      "value_options": {
+		    "time": true
+      }	
+	},
+    {
+      "id":"a5669700-a911-4ad1-b047-fcdf40904e93",
+      "value": {
+        "add": [
+          123456
+        ],
+        "rem": [
+          987654
+        ]
+       }
+     }
+   ]
+}
+
+Example Response:
+{
+    "success": [
+        {
+            "id": "330ed7ca-c6fe-4939-bfd7-fc314b6792f2"
+        },
+        {
+            "id": "f20db5f1-69dc-42c7-8f59-1f670bffd6a3"
+        },
+        {
+            "id": "a5669700-a911-4ad1-b047-fcdf40904e93"
+        }
+    ],
+    "failed": [
+      {
+         "id": "f20db5f1-69dc-42c7-8f59-1f670bffd6a3"
+      }
+    ]
+}
+
+Markdown support in long text fields 
+
+
+
+Lists
+Creating List w/ Description in Markdown
+Purpose: Creating a List with a Description in Markdown
+HTTP Method: POST
+Endpoint: api/v2/folder/{folderId}/list (Folder) api/v2/space/{spaceId}/list (Folder-less)
+Example Payload(s):
+{
+  "name": "Created List Name",
+  "markdown_content": "# Header\n\n*Bold*"
+}
+Updating List Description w/ Markdown
+Purpose: Updating a List Description w/ Markdown
+HTTP Method: PUT
+Endpoint: (update List): api/v2/list/{listId}
+Example Payload(s):
+{
+  "name": "Updated List Name",
+  "markdown_content": "# Header\n\n*Bold*"
+}
+
+
+
+Hierarchy
+Get All Folders
+Endpoint: /api/v2/team/:team_id/folder 
+HTTP Method: GET
+Purpose: Retrieve all folders for an entire workspace.
+NOTE: The results are NOT paginated.
+Get All Lists
+Endpoint: /api/v2/team/:team_id/list 
+HTTP Method: GET
+Purpose: Retrieve all lists for an entire workspace.
+NOTE: The results are NOT paginated.
+
+
+Statuses
+Create List Status
+Endpoint: /api/v2/list/:subcategory_id/status 
+HTTP Method: POST
+Purpose: Create a List Status.
+NOTE: Types of open, done, and closed are not supported at this time (error response).  If left blank, it will default to custom
+Example Payload(s):
+{
+  "status": {
+    name: "On Hold",
+    color: "#00FF00",
+    type: "custom"
+  }
+}
+
+
+Tasks
+Getting Filtered Team Tasks
+Endpoint: /api/v2/team/{team_Id}/task 
+Query Parameters: 
+&task_ids[]=abc123&task_ids[]=xyz987 - Get specific tasks
+&include_timl=true - Include tasks that are TIMLed into that location
+&parent={taskId} - Get all children (and grandchildren...) of a top-level task
+&parent={taskId}&immediate_children=true - Get the immediate subtasks of a top-level task
+&parent={taskId}&immediate_children=true&subtask_parent={subtaskId} - Get the immediate subtasks of a subtask task
+HTTP Method: GET
+Purpose: Filtering results to return only specific Tasks.
+Get Deleted Task
+Endpoint: /api/v2/task/{taskId}?include_deleted=true 
+HTTP Method: GET
+Purpose: Get a task that has been deleted
+Copy Task
+Endpoint: /api/v2/task/{taskId}/copy 
+HTTP Method: POST
+Purpose: Copy a specific task
+Example Payload(s):
+name: string? - name of new task
+status: string? - new status of new task
+comment: boolean? - copy comments
+relationships: boolean? - copy relationships
+task_activity: boolean? - copy task_activity
+subcategory_id: List ID? - list ID of new task
+attachments: boolean? - copy attachments
+custom_fields: boolean? - Include custom fields (defaults to false)
+
+{
+  "name": "New Task", 
+  "comment": true, 
+  "attachments": true,
+  "status":"new",
+  "relationships":true,
+  "task_activity":true,
+  "subcategory_id":1234,
+  "custom_fields":true
+}
+
+Merge Task
+Endpoint: /api/v2/task/{taskId}/merge  
+HTTP Method: POST
+Purpose: Merge the source tasks into the parameter task
+Example Payload(s):
+{
+  "source_task_ids": ["taskId1", "taskId2"]
+}
+
+
+
+Templates
+Retrieving Folder Template IDs
+Endpoint: /api/v2/team/:team_id/folder_template
+HTTP Method: GET
+Purpose: Get Folder Template IDs.
+Retrieving List Template IDs
+Endpoint: /api/v2/team/:team_id/list_template 
+HTTP Method: GET
+Purpose: Get List template IDs.
+Creating a Folder from Template
+Endpoint: /api/v2/space/:spaceId/folder_template/:template_id 
+HTTP Method: POST
+Purpose: Creating a Folder from a Folder Template.
+Example Payload(s):
+{
+  "name": "New Folder From Template"
+}
+Creating a List from Template
+Purpose: Create items from list templates.
+HTTP Method: POST
+Endpoint (In Folder): /api/v2/folder/:folder_id/list_template/:template_id
+Endpoint (Folder-less): /api/v2/space/:space_id/list_template/:template_id 
+Example Payload(s):
+{
+  "name": "New List From Template"
+}
+
+
+Time Tracking
+Retrieving Time Entries for All Users
+Purpose: Retrieve a filtered set of time entries for all users
+HTTP Method: GET
+Endpoint (In Folder): /api/v2/team/:team_id/time_entries?assignee=any&start_date=1731517764664&start_id=4460365994242478652
+Parameters:
+start_id is used for pagination.  Send the last ID of a given page to return records starting with the following record
+
+ 
+
+
+
+UsersWebhooks
+Replaying Failed Events
+Get User By Email
+HTTP Method: GET
+Endpoint: /api/v2/team/:teamId/user/:userId/capacity
+Purpose: Retrieves a single user based on their email address
+Example Payload:
+[
+   {
+      "userid":123,
+      "capacity":{
+         "time_estimate":{
+            "0":null,
+            "1":28800000,
+            "2":28800000,
+            "3":28800000,
+            "4":28800000,
+            "5":28800000,
+            "6":null,
+            "type":"weekly",
+            "weekly":144000000
+         },
+         "points":{
+            "0":null,
+            "1":1,
+            "2":1,
+            "3":1,
+            "4":1,
+            "5":1,
+            "6":null,
+            "type":"weekly",
+            "weekly":5
+         },
+         "tasks":{
+            "0":null,
+            "1":2,
+            "2":2,
+            "3":2,
+            "4":2,
+            "5":2,
+            "6":null,
+            "type":"weekly",
+            "weekly"10:null
+         }
+      },
+      "skip_weekends":null,
+      "entitled":true
+   }
+]
+Get User By EmailtHTTP Method: GET
+ User ByMethod: GET
+Endpoint (In Foldejdoe/api/v2/team/Purpose: Retrieves a single user based on their email addressser based on their{
+   "team":{
+      "id":"123",
+      "name":"John Demos",
+      "color":"#08c7e0",
+      "avatar":"",
+      "members":[
+         {
+            "user":{
+               "id":123,
+               "username":"John Doe",
+               "email":"jdoe@clickup.com",
+               "color":"#08c7e0",
+               "profilePicture":"",
+               "initials":"JS",
+               "role":1,
+               "role_key":"owner",
+               "custom_role":null,
+               "last_active":"1741809424298",
+               "date_joined":"1655216335385",
+               "date_invited":"1655216335385"
+            }
+         }
+      ],
+      "roles":[
+         {
+            "id":1,
+            "name":"owner",
+            "custom":false
+         },
+         {
+            "id":2,
+            "name":"admin",
+            "custom":false
+         },
+         {
+            "id":3,
+            "name":"member",
+            "custom":false
+         },
+         {
+            "id":4,
+            "name":"guest",
+            "custom":false
+         },
+         {
+            "id":5457751,
+            "name":"space owner",
+            "inherited_role":3,
+            "custom":true
+         }
+      ]
+   }
+}
+        
+Webhooks
+Replaying Failed Events
+
+
+            "id":5457751,
+            "name":"space owner",
+            "inherited_role":3,
+            "custom":true
+         }
+      ]
+   }
+}
