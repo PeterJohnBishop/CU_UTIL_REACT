@@ -28,8 +28,8 @@ router.post('/webhook', async (req, res) => {
             return res.status(400).send('Missing x-signature header');
         }
         if (secretValue === signature) {
-            res.status(200).json({
-                message: 'Payload Received and validated',
+            res.status(400).json({
+                message: 'Payload Received and validated - Rejecting for signature test',
                 data: req.body
             });
         } else {
