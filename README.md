@@ -1,5 +1,7 @@
 # CU_UTIL_REACT
 
+Start locally with `npm run start`
+
 ## A Node Express server with routes to demonstrate,
 
 - OAuth 2.0 Authentication Flow
@@ -11,6 +13,3 @@
 - Views to handle OAuth Authentication 
 - Container-Presentational design pattern
 
-little change
-another little change
-another just in case
