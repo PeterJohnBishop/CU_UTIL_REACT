@@ -29,7 +29,7 @@ router.post('/webhook', async (req, res) => {
         }
         if (secretValue === signature) {
             res.status(200).json({
-                message: 'Payload Received and validated - Rejecting for signature test',
+                message: 'Payload Received and validated. Check webhook secret matches in Heroku!',
                 data: req.body
             });
         } else {

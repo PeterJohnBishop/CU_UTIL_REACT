@@ -12,6 +12,9 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 
+// In user custom apps when a CORS error is returned it's because ClickUp's server only allows request from specific domains. 
+// Here my server only allows requests from the domain 'http://localhost' on any port, 
+// or from my hosted server at https://obscure-dawn-20990-34de273bc864.herokuapp.com
 const allowedOrigins = [
     /^http:\/\/localhost(:\d+)?$/, //localhost:allports
     "https://obscure-dawn-20990-34de273bc864.herokuapp.com/"
